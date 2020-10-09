@@ -1,49 +1,65 @@
 # -*- coding: utf-8 -*-
 import scrapy
-import re
+from pyprnt import prnt
+
 from ..items import SearchWordItem
+
+import json
+import pyprnt
+
+FORM_DIC = {'query': 'java',
+            'answer': '',
+            'period': 'qna',
+            'sort': 'none',
+            'resultMode': 'json',
+            'section': 'qna',
+            'page': '1',
+            'pageOffset': '1',
+            'isPrevPage': 'false'}
+
+url = "https://m.kin.naver.com/mobile/search/searchList.nhn"
 
 
 class SearchWordSpider(scrapy.Spider):
     name = "SearchWordSpider"
 
-    def __init__(self, word, **kwargs):
+    def __init__(self, word, page, **kwargs):
         super().__init__(**kwargs)
-        self.word = word
-        self.download_delay = 5
+        FORM_DIC['query'] = word
+        self.page = int(page)
 
     def start_requests(self):
-
-        for page in range(1):
-            params = {'kin_start': (page * 10) + 1}
-            url = "https://search.naver.com/search.naver?where=kin&kin_display=10&query={}&sm=tab_pge&kin_start={}".format(
-                self.word, params['kin_start'])
-            request = scrapy.Request(url, self.parse)
-            request.meta['params'] = params
-            yield request
+        for i in range(self.page):
+            FORM_DIC['page'] = str(i)
+            yield scrapy.FormRequest(url=url, formdata=FORM_DIC, callback=self.parse)
 
     def parse(self, response, **kwargs):
+        # request(http) data to naver knowledge api server
+        # naver web developers receives api data by form
+        # FormRequest(method) is used to request(http) form data
+
+        # get item(variables) from items.py
+        # can store data by item(variable)
         item = SearchWordItem()
 
-        for resultArea in response.xpath(r'//*[@id="elThumbnailResultArea"]/li'):
-            title = resultArea.xpath(r'dl/dt/a')[0].extract()
-            title = re.sub(r'<.*?>', '', title)
-            print("#### title : %s" % title)
+        # type(scrapy.http.response.text.TextResponse) convert type to -> type(str)
+        responseString = response.text
 
-            content = resultArea.xpath(r'dl/dd[2]')[0].extract()
-            content = re.sub(r'<.*?>', '', content)
-            print("#### content : %s" % content)
+        # type(scrapy.http.response.text.TextResponse) convert type to -> type(dict)
+        # use json module because response data is json format
+        ResponseToDict = json.loads(responseString)
+        # print type(dict) pretty
+        # prnt(ResponseToDict)
 
-            questionContent = resultArea.xpath(r'dl/dd[1]/text()')[0].extract()
-            questionContent = re.sub(r'([0-9]{4}.[0-9]{2}.[0-9]{2}).*', r'\1', questionContent).replace('.', '-')
-            print("#### question Date : %s" % questionContent)
+        for i in range(0, ResponseToDict['countPerPage']):
+            print("============ title =========")
+            print(ResponseToDict['lists'][i]['title'])
+            print("============ content =========")
+            print(ResponseToDict['lists'][i]['contents'])
+            print("\n\n")
 
-            answerContent = resultArea.xpath(r'dl/dd[3]')[0].extract()
-            answerContent = re.sub(r'<.*?>', '', answerContent)
-            print("#### answer : %s" % answerContent)
-
-            item['Title'] = title
-            item['QuestionContent'] = content
-            item['AnswerContent'] = answerContent
-
+            item['duplicateFilterPass'] = ResponseToDict['lists'][i]['title']
+            item['title'] = ResponseToDict['lists'][i]['title']
+            item['questionContent'] = ResponseToDict['lists'][i]['contents']
             yield item
+
