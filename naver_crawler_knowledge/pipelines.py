@@ -7,6 +7,8 @@
 
 from __future__ import unicode_literals
 
+import datetime
+
 from scrapy.exporters import CsvItemExporter
 
 import os
@@ -17,23 +19,20 @@ from lazyme.string import color_print
 from itemadapter import ItemAdapter
 from scrapy.exceptions import DropItem
 
+from itemadapter import ItemAdapter
+from scrapy.exceptions import DropItem
 
 class DuplicatesPipeline:
 
     def __init__(self):
-        self.duplicateAvoidSet = set()
+        self.title = set()
 
     def process_item(self, item, spider):
         adapter = ItemAdapter(item)
-        if adapter['title'] in self.duplicateAvoidSet:
-            color_print("\nduplicated item deleted", color='red')
-            raise DropItem(item)
-        if adapter['questionText'] in self.duplicateAvoidSet:
-            color_print("\nduplicated item deleted", color='red')
-            raise DropItem(item)
+        if adapter['title'] in self.title:
+            raise DropItem("Duplicate item found: %r" % item)
         else:
-            self.duplicateAvoidSet.add(adapter['title'])
-            self.duplicateAvoidSet.add(adapter['questionText'])
+            self.title.add(adapter['title'])
             return item
 
 
@@ -59,6 +58,8 @@ class CsvPipeline(object):
         self.exporter.start_exporting()
 
     def close_spider(self, spider):
+        now = datetime.datetime.now()
+        print(now)
         self.exporter.finish_exporting()
         self.file.close()
 
@@ -67,19 +68,5 @@ class CsvPipeline(object):
 
     # can do something for item
     def process_item(self, item, spider):
-        # print(item['title'])
         self.exporter.export_item(item)
         return item
-
-# class JsonPipeline(object):
-#     def __init__(self):
-#         self.file = open("crawler_data.json", 'wb')
-#         self.exporter = JsonItemExporter(self.file, encoding='utf-8', ensure_ascii=False)
-#         self.exporter.start_exporting()
-#
-#     def close_spider(self, spider):
-#         self.exporter.finish_exporting()
-#         self.file.close()
-#
-#     def process_item(self, item, spider):
-#         return item

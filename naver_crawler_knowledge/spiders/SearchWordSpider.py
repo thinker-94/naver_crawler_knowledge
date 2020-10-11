@@ -6,13 +6,17 @@ i used scrapy framework (https://scrapy.org/) for crawling
 please contact me if this code have problem or any (94thinker@gmail.com)
 i enjoy to solve your problem, thank you for using my code
 """
+import datetime
 import sys
+from logging import exception
 
 import scrapy
 from pyprnt import prnt
+from scrapy.spidermiddlewares.httperror import HttpError
 
 from ..items import SearchWordItem
 import json
+import time
 
 # this module can be used to print python(dict) type data well organized, it helps to analyze how to parse data
 import pyprnt
@@ -25,7 +29,7 @@ FORM_DIC = {'query': '',
             'sort': 'none',
             'resultMode': 'json',
             'section': 'qna',
-            'page': '',
+            'page': '900',
             'pageOffset': '1',
             'isPrevPage': 'false'}
 
@@ -40,7 +44,6 @@ item = SearchWordItem()
 
 class SearchWordSpider(scrapy.Spider):
     name = "SearchWordSpider"
-
     def __init__(self, words, page, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # to make args to list i used split(method)
@@ -48,6 +51,7 @@ class SearchWordSpider(scrapy.Spider):
         # to use for loop page(type(str)) have to be type(int)
         # but i think maybe there is better way (not converting to int)
         self.page = int(page)
+        self.download_delay = 0
 
     # request(http) data to naver knowledge api server
     # if you send 1 request(http) you will get 20 page data
@@ -65,6 +69,7 @@ class SearchWordSpider(scrapy.Spider):
                 yield request
 
     def parse(self, response, **kwargs):
+        # print(response.body)
         # convert type to -> type(dict)
         # used json module because response data is json format
         # ResponseToDict is type(dict) data Contains 20 page
@@ -74,7 +79,6 @@ class SearchWordSpider(scrapy.Spider):
         # onPage contains 20 question data [2020/10/11]
         for onePage in range(1, ResponseToDict['countPerPage']):
             item['id'] = hash(ResponseToDict['lists'][onePage]['docId'])
-            item['searchWord'] = ResponseToDict['lists'][onePage]['highlightTag']
             item['title'] = ResponseToDict['lists'][onePage]['title']
             item['questionText'] = ResponseToDict['lists'][onePage]['contents']
             yield item

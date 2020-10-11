@@ -11,7 +11,7 @@ SPIDER_MODULES = ['naver_crawler_knowledge.spiders']
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 26
+CONCURRENT_REQUESTS = 16
 
 # Configure a delay for requests for the same website (default: 0)
 DOWNLOAD_DELAY = 0
@@ -20,7 +20,7 @@ DOWNLOAD_DELAY = 0
 COOKIES_ENABLED = True
 
 # Disable Telnet Console (enabled by default)
-TELNETCONSOLE_ENABLED = True
+TELNETCONSOLE_ENABLED = False
 
 # exported data(csv, txt ..) encoding type
 FEED_EXPORT_ENCODING = 'utf-8'
@@ -61,12 +61,12 @@ DOWNLOADER_MIDDLEWARES = {
     'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
     'scrapy_random_useragent_pro.middleware.RandomUserAgentMiddleware': 100,
     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+    'naver_crawler_knowledge.middlewares.HttpErrorMiddleware': None
 }
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'naver_crawler_knowledge.pipelines.DuplicatesPipeline': 400,
     'naver_crawler_knowledge.pipelines.CsvPipeline': 300,
 }
 
