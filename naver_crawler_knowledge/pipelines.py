@@ -14,24 +14,27 @@ import time
 from lazyme.string import color_print
 
 
-# duplicate = False
+from itemadapter import ItemAdapter
+from scrapy.exceptions import DropItem
 
 
-# to filter duplicated data
-# class DuplicatesPipeline:
-#
-#     def __init__(self):
-#         self.ids_seen = set()
-#
-#     def process_item(self, item, spider):
-#         adapter = ItemAdapter(item)
-#         if adapter['duplicateFilterPass'] in self.ids_seen:
-#             item['duplicateFilterPass'] = False
-#             raise DropItem("Duplicate item found: %r" % item)
-#         else:
-#             item['duplicateFilterPass'] = True
-#             self.ids_seen.add(adapter['duplicateFilter'])
-#             return item
+class DuplicatesPipeline:
+
+    def __init__(self):
+        self.duplicateAvoidSet = set()
+
+    def process_item(self, item, spider):
+        adapter = ItemAdapter(item)
+        if adapter['title'] in self.duplicateAvoidSet:
+            color_print("\nduplicated item deleted", color='red')
+            raise DropItem(item)
+        if adapter['questionText'] in self.duplicateAvoidSet:
+            color_print("\nduplicated item deleted", color='red')
+            raise DropItem(item)
+        else:
+            self.duplicateAvoidSet.add(adapter['title'])
+            self.duplicateAvoidSet.add(adapter['questionText'])
+            return item
 
 
 class CsvPipeline(object):

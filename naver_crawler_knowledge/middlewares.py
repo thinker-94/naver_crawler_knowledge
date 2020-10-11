@@ -6,9 +6,6 @@
 from scrapy import signals
 from scrapy.utils.python import without_none_values
 
-# useful for handling different item types with a single interface
-from itemadapter import is_item, ItemAdapter
-
 
 # DefaultHeadersMiddleware(class) is handling http Header
 # you can change header(http) data by settings.py -> DEFAULT_REQUEST_HEADERS

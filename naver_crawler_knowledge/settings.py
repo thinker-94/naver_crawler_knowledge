@@ -66,7 +66,7 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    # 'naver_crawler_knowledge.pipelines.DuplicatesPipeline': 400,
+    'naver_crawler_knowledge.pipelines.DuplicatesPipeline': 400,
     'naver_crawler_knowledge.pipelines.CsvPipeline': 300,
 }
 

@@ -7,8 +7,8 @@
 
 ## Installation
 ````
-$ pip install scrapy
-$ pip install scrapy_user_agents
+pip install scrapy
+pip install scrapy-random-useragent-pro
 
 ## TODO
 - csv에 해당 카테고리 코드 들어가게 하기

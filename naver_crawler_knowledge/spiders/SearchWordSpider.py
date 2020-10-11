@@ -55,7 +55,6 @@ class SearchWordSpider(scrapy.Spider):
     # FormRequest(scrapy module) is used to request(http) form data
     # Generally form data is used for input (ex. id, password ...)
     def start_requests(self):
-
         for PageNumber in range(self.page):
             # put page number into FORM_DIC to request naver knowledge api by page number
             for word in self.wordList:
