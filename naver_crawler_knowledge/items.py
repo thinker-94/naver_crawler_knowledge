@@ -9,13 +9,10 @@ import scrapy
 class SearchWordItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    duplicateFilterPass = scrapy.Field()
+    id = scrapy.Field()
+    searchWord = scrapy.Field()
     title = scrapy.Field()
-    questionContent = scrapy.Field()
-    java = scrapy.Field()
-    army = scrapy.Field()
-    health = scrapy.Field()
-    linux = scrapy.Field()
-    samsung = scrapy.Field()
+    questionText = scrapy.Field()
+
 
 

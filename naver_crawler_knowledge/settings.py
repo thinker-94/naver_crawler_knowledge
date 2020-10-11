@@ -4,6 +4,7 @@ naver_crawler_knowledge crawler setting file
 
 BOT_NAME = 'naver_crawler_knowledge'
 
+NEWSPIDER_MODULE = 'naver_crawler_knowledge.spiders'
 SPIDER_MODULES = ['naver_crawler_knowledge.spiders']
 
 # Obey robots.txt rules
@@ -13,7 +14,7 @@ ROBOTSTXT_OBEY = False
 CONCURRENT_REQUESTS = 26
 
 # Configure a delay for requests for the same website (default: 0)
-DOWNLOAD_DELAY = 1
+DOWNLOAD_DELAY = 0
 
 # Disable cookies (enabled by default)
 COOKIES_ENABLED = True
@@ -23,6 +24,11 @@ TELNETCONSOLE_ENABLED = True
 
 # exported data(csv, txt ..) encoding type
 FEED_EXPORT_ENCODING = 'utf-8'
+
+# Crawl responsibly by identifying yourself (and your website) on the user-agent
+USER_AGENT = 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) ' \
+             'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 ' \
+             'Mobile Safari/537.36'
 
 # Override the default request headers:
 DEFAULT_REQUEST_HEADERS = {
@@ -48,13 +54,16 @@ SPIDER_MIDDLEWARES = {
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
     # make UserAgent(HTTP HEADER data) random
-    'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 400,
+    'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
+    'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
+    'scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware': None,
+    'random_useragent.RandomUserAgentMiddleware': 400
 }
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'naver_crawler_knowledge.pipelines.DuplicatesPipeline': 400,
+    # 'naver_crawler_knowledge.pipelines.DuplicatesPipeline': 400,
     'naver_crawler_knowledge.pipelines.CsvPipeline': 300,
 }
 
@@ -75,9 +84,6 @@ bottom setting is not considered to use (2020-10-9)
 
 # Disable Telnet Console (enabled by default)
 # TELNETCONSOLE_ENABLED = False
-
-# Crawl responsibly by identifying yourself (and your website) on the user-agent
-# USER_AGENT = 'naver_crawler_knowledge (+http://www.yourdomain.com)'
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

@@ -27,6 +27,7 @@ class DefaultHeadersMiddleware:
             request.headers.setdefault(k, v)
 
 
+# just default class made by scrapy framework
 class NaverCrawlerKnowledgeSpiderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the spider middleware does not modify the
@@ -49,7 +50,6 @@ class NaverCrawlerKnowledgeSpiderMiddleware:
     def process_spider_output(self, response, result, spider):
         # Called with the results returned from the Spider, after
         # it has processed the response.
-
         # Must return an iterable of Request, or item objects.
         for i in result:
             yield i
