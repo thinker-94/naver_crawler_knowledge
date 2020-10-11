@@ -44,11 +44,14 @@ DEFAULT_REQUEST_HEADERS = {
     'x-requested-with': 'XMLHttpRequest'
 }
 
+RANDOM_UA_ENABLED = True
+RANDOM_UA_DEFAULT_TYPE = 'mobile'
+# always change user-agent
+RANDOM_UA_OVERWRITE = False
+
+
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
-SPIDER_MIDDLEWARES = {
-   'naver_crawler_knowledge.middlewares.DefaultHeadersMiddleware': 543,
-}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
@@ -56,8 +59,8 @@ DOWNLOADER_MIDDLEWARES = {
     # make UserAgent(HTTP HEADER data) random
     'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
     'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
-    'scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware': None,
-    'random_useragent.RandomUserAgentMiddleware': 400
+    'scrapy_random_useragent_pro.middleware.RandomUserAgentMiddleware': 100,
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
 }
 
 # Configure item pipelines

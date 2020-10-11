@@ -62,10 +62,10 @@ class SearchWordSpider(scrapy.Spider):
                 FORM_DIC['page'] = str(PageNumber)
                 FORM_DIC['query'] = word
                 # if requests continue callback method will execute
-                yield scrapy.FormRequest(url=url, formdata=FORM_DIC, callback=self.parse)
+                request = scrapy.FormRequest(url=url, formdata=FORM_DIC, callback=self.parse, meta={'ua': 'mobile'})
+                yield request
 
     def parse(self, response, **kwargs):
-
         # convert type to -> type(dict)
         # used json module because response data is json format
         # ResponseToDict is type(dict) data Contains 20 page
