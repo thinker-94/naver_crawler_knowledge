@@ -57,11 +57,10 @@ RANDOM_UA_OVERWRITE = False
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
     # make UserAgent(HTTP HEADER data) random
-    'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
-    'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
+    # 'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
+    # 'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
     'scrapy_random_useragent_pro.middleware.RandomUserAgentMiddleware': 100,
     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-    'naver_crawler_knowledge.middlewares.HttpErrorMiddleware': None
 }
 
 # Configure item pipelines

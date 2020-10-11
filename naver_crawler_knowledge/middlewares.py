@@ -3,12 +3,10 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-from scrapy import signals
-from scrapy.spidermiddlewares.httperror import HttpError, logger
 from scrapy.utils.python import without_none_values
 
 
-# DefaultHeadersMiddleware(class) is handling http Header
+# DefaultHeadersMiddleware(class) is handling request(http) Header
 # you can change header(http) data by settings.py -> DEFAULT_REQUEST_HEADERS
 class DefaultHeadersMiddleware:
 

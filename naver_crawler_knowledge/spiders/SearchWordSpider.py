@@ -4,19 +4,13 @@
 made by thinker (kim young suk) for HamoniKR (https://github.com/hamonikr) opensource OS
 i used scrapy framework (https://scrapy.org/) for crawling
 please contact me if this code have problem or any (94thinker@gmail.com)
-i enjoy to solve your problem, thank you for using my code
+enjoy to solve your problem, thank you for using my code
+(* for detecting naver crawler defender i changed some scrapy framework code that code in note in this project please note)
 """
-import datetime
-import sys
-from logging import exception
-
 import scrapy
-from pyprnt import prnt
-from scrapy.spidermiddlewares.httperror import HttpError
 
-from ..items import SearchWordItem
+from naver_crawler_knowledge.items import SearchWordItem
 import json
-import time
 
 # this module can be used to print python(dict) type data well organized, it helps to analyze how to parse data
 import pyprnt
@@ -41,17 +35,18 @@ url = "https://m.kin.naver.com/mobile/search/searchList.nhn"
 # can store data by item(variable)
 item = SearchWordItem()
 
-
 class SearchWordSpider(scrapy.Spider):
+    # scrapy know this crawler by name(variable) and can executed
     name = "SearchWordSpider"
-    def __init__(self, words, page, *args, **kwargs):
+    def __init__(self, words, page, delay, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # to make args to list i used split(method)
         self.wordList = words.split(',')
         # to use for loop page(type(str)) have to be type(int)
         # but i think maybe there is better way (not converting to int)
-        self.page = int(page)
-        self.download_delay = 0
+        self.pageNum = int(page)
+        # controls request delay(second) get from super scrapy framework class
+        self.downloadDelay = int(delay)
 
     # request(http) data to naver knowledge api server
     # if you send 1 request(http) you will get 20 page data
@@ -59,10 +54,10 @@ class SearchWordSpider(scrapy.Spider):
     # FormRequest(scrapy module) is used to request(http) form data
     # Generally form data is used for input (ex. id, password ...)
     def start_requests(self):
-        for PageNumber in range(self.page):
+        for pageNum in range(self.pageNum):
             # put page number into FORM_DIC to request naver knowledge api by page number
             for word in self.wordList:
-                FORM_DIC['page'] = str(PageNumber)
+                FORM_DIC['page'] = str(pageNum)
                 FORM_DIC['query'] = word
                 # if requests continue callback method will execute
                 request = scrapy.FormRequest(url=url, formdata=FORM_DIC, callback=self.parse, meta={'ua': 'mobile'})
@@ -72,13 +67,12 @@ class SearchWordSpider(scrapy.Spider):
         # print(response.body)
         # convert type to -> type(dict)
         # used json module because response data is json format
-        # ResponseToDict is type(dict) data Contains 20 page
-        ResponseToDict = json.loads(response.text)
+        # qDic(valuable) is type(dict) data Contains 20 item(question data in NAVER Knowledge Api)
+        qDic = json.loads(response.text)
 
-        # for loop can make naver knowledge one page according to ResponseToDict['countPerPage']
+        # for loop can make naver knowledge one page according to qDic['countPerPage']
         # onPage contains 20 question data [2020/10/11]
-        for onePage in range(1, ResponseToDict['countPerPage']):
-            item['id'] = hash(ResponseToDict['lists'][onePage]['docId'])
-            item['title'] = ResponseToDict['lists'][onePage]['title']
-            item['questionText'] = ResponseToDict['lists'][onePage]['contents']
+        for onePage in range(1, qDic['countPerPage']):
+            item['title'] = qDic['lists'][onePage]['title']
+            item['questionText'] = qDic['lists'][onePage]['contents']
             yield item

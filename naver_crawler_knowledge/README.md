@@ -1,15 +1,14 @@
-## HOW TO USE
-- scrapy crawl SearchWordSpider -a word=자바
+## Why new crawler?
+- To make [HamonikaOS](https://github.com/hamonikr) tagging AI
 
-## Tech
+## Develop Environment
+- Window 10
+- Ubuntu 20.04
 - Scrapy 2.3
 - Python 3.6
 
 ## Installation
-````
-pip install scrapy
-pip install scrapy-random-useragent-pro
-
-## TODO
-- csv에 해당 카테고리 코드 들어가게 하기
-- 한꺼번에 많은 검색어 가져오게 하기
+```
+$ pip install scrapy
+$ pip install scrapy-random-useragent-pro
+```

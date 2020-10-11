@@ -6,22 +6,14 @@
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
 from __future__ import unicode_literals
-
-import datetime
-
 from scrapy.exporters import CsvItemExporter
+from scrapy.exceptions import DropItem
 
 import os
 import time
-from lazyme.string import color_print
 
-
-from itemadapter import ItemAdapter
-from scrapy.exceptions import DropItem
-
-from itemadapter import ItemAdapter
-from scrapy.exceptions import DropItem
-
+# because avoid duplicate by title made DuplicatesPipeline class (2020-10-11)
+# it save title in set(type) item['variable] and find duplicate title
 class DuplicatesPipeline:
 
     def __init__(self):
@@ -32,10 +24,12 @@ class DuplicatesPipeline:
         if adapter['title'] in self.title:
             raise DropItem("Duplicate item found: %r" % item)
         else:
+            # when title is not found in set, then item['title] add in set
             self.title.add(adapter['title'])
             return item
 
 
+# CsvPipeline class exports crawled items by .csv format
 class CsvPipeline(object):
 
     def __init__(self):
@@ -44,27 +38,26 @@ class CsvPipeline(object):
 
     def open_spider(self, spider):
         folderName = "SearchWordDataCSV"
-        fileName = ','.join(spider.wordList) + "[page:" + str(spider.page) + "]"
+        fileName = ','.join(spider.wordList)
 
         if not os.path.exists(folderName):
             os.makedirs(folderName)
-            color_print("\ncreated folder to save data (project root dir)\nName : " + folderName, color='red')
-            color_print("\nThank you for using my crawler ^^", color='blue')
-            color_print("executed after 5 second")
+            print("\ncreated folder to save data (project root dir)\nName : " + folderName)
+            print("\nThank you for using my crawler ^^")
+            print("executed after 5 second")
             time.sleep(5)
-            color_print("\n********START********", color='red')
+
+        print("\n********START********")
         self.file = open(folderName + "/" + fileName + ".csv", 'wb')
         self.exporter = CsvItemExporter(self.file, encoding='utf-8')
         self.exporter.start_exporting()
 
     def close_spider(self, spider):
-        now = datetime.datetime.now()
-        print(now)
         self.exporter.finish_exporting()
         self.file.close()
 
-        color_print("\ncsv file saved in current project root dir\n" 
-                    "location : " + self.file.name, color='red')
+        print("\ncsv file saved in current project root dir\n" 
+                    "location : " + self.file.name)
 
     # can do something for item
     def process_item(self, item, spider):
