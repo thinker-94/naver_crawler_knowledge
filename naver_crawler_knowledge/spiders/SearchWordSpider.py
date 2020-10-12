@@ -12,10 +12,7 @@ import scrapy
 from naver_crawler_knowledge.items import SearchWordItem
 import json
 
-# this module can be used to print python(dict) type data well organized, it helps to analyze how to parse data
-import pyprnt
-
-# according to chrome browser naver client developer requests using ajax with this form data
+# according to chrome browser NAVER client developer requests using ajax with this form data
 # this data type is python type(dict)
 FORM_DIC = {'query': '',
             'answer': '',
@@ -27,8 +24,8 @@ FORM_DIC = {'query': '',
             'pageOffset': '1',
             'isPrevPage': 'false'}
 
-# url is used to request(http) naver knowledge mobile page
-# mobile page is receiving json format data, it is easy to parse because naver knowledge api is well organized
+# url is used to request(http) NAVER knowledge mobile page
+# mobile page is receiving json format data, it is easy to parse because NAVER knowledge api is well organized
 url = "https://m.kin.naver.com/mobile/search/searchList.nhn"
 
 # get item(variables) from items.py
@@ -48,14 +45,14 @@ class SearchWordSpider(scrapy.Spider):
         # controls request delay(second) get from super scrapy framework class
         self.downloadDelay = int(delay)
 
-    # request(http) data to naver knowledge api server
+    # request(http) data to NAVER knowledge api server
     # if you send 1 request(http) you will get 20 page data
-    # naver web developers receives api data by form
+    # NAVER web developers receives api data by form
     # FormRequest(scrapy module) is used to request(http) form data
     # Generally form data is used for input (ex. id, password ...)
     def start_requests(self):
         for pageNum in range(self.pageNum):
-            # put page number into FORM_DIC to request naver knowledge api by page number
+            # put page number into FORM_DIC to request NAVER knowledge api by page number
             for word in self.wordList:
                 FORM_DIC['page'] = str(pageNum)
                 FORM_DIC['query'] = word
@@ -64,13 +61,12 @@ class SearchWordSpider(scrapy.Spider):
                 yield request
 
     def parse(self, response, **kwargs):
-        # print(response.body)
         # convert type to -> type(dict)
         # used json module because response data is json format
         # qDic(valuable) is type(dict) data Contains 20 item(question data in NAVER Knowledge Api)
         qDic = json.loads(response.text)
 
-        # for loop can make naver knowledge one page according to qDic['countPerPage']
+        # for loop can make NAVER knowledge one page according to qDic['countPerPage']
         # onPage contains 20 question data [2020/10/11]
         for onePage in range(1, qDic['countPerPage']):
             item['title'] = qDic['lists'][onePage]['title']

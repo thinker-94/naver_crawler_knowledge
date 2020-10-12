@@ -1,14 +1,11 @@
 ## Why new crawler?
-- To make [HamonikaOS](https://github.com/hamonikr) tagging AI
+To make [HamonikaOS](https://github.com/hamonikr) tagging AI
+i needed big data for making new model
 
-## Develop Environment
-- Window 10
-- Ubuntu 20.04
-- Scrapy 2.3
+## Used Open Source
+- Scrapy 2.3 (latest ver. 2020-10-12)
+- scrapy-random-useragent-pro
 - Python 3.6
 
-## Installation
-```
-$ pip install scrapy
-$ pip install scrapy-random-useragent-pro
-```
+## Feature
+- get all data in NAVER knowledge api by search word & page count
