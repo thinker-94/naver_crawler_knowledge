@@ -8,12 +8,14 @@
 from __future__ import unicode_literals
 from scrapy.exporters import CsvItemExporter
 from scrapy.exceptions import DropItem
+from itemadapter import ItemAdapter
 
 import os
 import time
 
-# because avoid duplicate by title made DuplicatesPipeline class (2020-10-11)
-# it save title in set(type) item['variable] and find duplicate title
+# this class is for remove duplicated data
+# avoid duplicate by title
+# save title in set(type) then search set(type) to find duplicated title
 class DuplicatesPipeline:
 
     def __init__(self):
@@ -22,7 +24,7 @@ class DuplicatesPipeline:
     def process_item(self, item, spider):
         adapter = ItemAdapter(item)
         if adapter['title'] in self.title:
-            raise DropItem("Duplicate item found: %r" % item)
+            DropItem(item)
         else:
             # when title is not found in set, then item['title] add in set
             self.title.add(adapter['title'])
@@ -42,7 +44,7 @@ class CsvPipeline(object):
 
         if not os.path.exists(folderName):
             os.makedirs(folderName)
-            print("\ncreated folder to save data (project root dir)\nName : " + folderName)
+            print("\ncreated folder to save data (your current directory)\nName : " + folderName)
             print("\nThank you for using my crawler ^^")
             print("executed after 5 second")
             time.sleep(5)
@@ -61,5 +63,6 @@ class CsvPipeline(object):
 
     # can do something for item
     def process_item(self, item, spider):
+        print(item['title'])
         self.exporter.export_item(item)
         return item
