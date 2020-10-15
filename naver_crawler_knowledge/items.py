@@ -5,12 +5,8 @@
 
 import scrapy
 
+
 class SearchWordItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    item = scrapy.Field()
-    title = scrapy.Field()
-    questionText = scrapy.Field()
-
-
-
+    text = scrapy.Field()

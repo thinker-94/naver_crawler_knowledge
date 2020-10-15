@@ -9,8 +9,8 @@ enjoy to solve your problem, thank you for using my code
 """
 
 import scrapy
-from naver_crawler_knowledge.items import SearchWordItem
 
+from naver_crawler_knowledge.items import SearchWordItem
 import json
 
 # according to chrome browser NAVER client developer requests using ajax with this form data
@@ -36,6 +36,7 @@ item = SearchWordItem()
 class SearchWordSpider(scrapy.Spider):
     # scrapy know this crawler by name(variable) and can executed
     name = "SearchWordSpider"
+
     # get some arguments from users (ex. words, page, delay ...)
     def __init__(self, words, page, delay, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -47,6 +48,7 @@ class SearchWordSpider(scrapy.Spider):
         # controls request delay(second)
         # use super class variable
         self.download_delay = int(delay)
+        self.wordIndex = -1
 
     # request(http) data to NAVER knowledge api server
     # if you send 1 request(http) then 20 question data will return
@@ -56,7 +58,6 @@ class SearchWordSpider(scrapy.Spider):
             for word in self.wordList:
                 FORM_DIC['page'] = str(pageNum)
                 FORM_DIC['query'] = word
-                item['searchWord'] = word
                 # NAVER web developers receives api data by form
                 # FormRequest(scrapy module) is used to request(http) form data
                 # Generally form data is used for input (ex. id, password ...)
@@ -68,14 +69,13 @@ class SearchWordSpider(scrapy.Spider):
     # response come from start_request(method)
     # i parsed python type(dic) it is easy to get data
     def parse(self, response, **kwargs):
+        self.wordIndex += 1
         # convert type to -> type(dict)
         # used json module because response data is json format
         # qDic(valuable) is type(dict) data Contains 20 item(question data in NAVER Knowledge Api)
         qDic = json.loads(response.text)
-
         # for loop can make NAVER knowledge one page according to qDic['countPerPage']
         # onPage contains 20 question data [2020/10/11]
         for onePage in range(1, qDic['countPerPage']):
-            item['title'] = qDic['lists'][onePage]['title']
-            item['questionText'] = qDic['lists'][onePage]['contents']
+            item['text'] = qDic['lists'][onePage]['title'] + qDic['lists'][onePage]['contents']
             yield item
