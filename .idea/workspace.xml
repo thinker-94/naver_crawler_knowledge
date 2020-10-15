@@ -7,10 +7,21 @@
         <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </expand>
-    <select />
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:bert_train_data_create" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="039a1c59-b82c-4834-b546-e8c3ed79b7d9" name="Default Changelist" comment="" />
+    <list default="true" id="039a1c59-b82c-4834-b546-e8c3ed79b7d9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/naver_crawler_knowledge/items.py" beforeDir="false" afterPath="$PROJECT_DIR$/naver_crawler_knowledge/items.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/naver_crawler_knowledge/pipelines.py" beforeDir="false" afterPath="$PROJECT_DIR$/naver_crawler_knowledge/pipelines.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/naver_crawler_knowledge/spiders/SearchWordSpider.py" beforeDir="false" afterPath="$PROJECT_DIR$/naver_crawler_knowledge/spiders/SearchWordSpider.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,6 +35,11 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GithubProjectSettings">
+    <option name="CREATE_PULL_REQUEST_DEFAULT_BRANCH" value="master" />
+    <option name="CREATE_PULL_REQUEST_DEFAULT_REPO_USER" value="thinker-94" />
+    <option name="CREATE_PULL_REQUEST_DEFAULT_REPO_NAME" value="naver_crawler_knowledge" />
+  </component>
   <component name="JupyterTrust" id="cdc9a8bd-4787-4d7a-b3f3-ed5110aaa7f8" />
   <component name="ProjectId" id="1ikTrSp6ETCcgtTPR7A5ABdboYd" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -36,6 +52,11 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Shell Script" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\kysth\naver_crawler_knowledge" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="Unnamed" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
@@ -93,7 +114,10 @@
       <updated>1602450789160</updated>
       <workItem from="1602450790269" duration="5077000" />
       <workItem from="1602455923834" duration="3951000" />
-      <workItem from="1602473785717" duration="3486000" />
+      <workItem from="1602473785717" duration="4441000" />
+      <workItem from="1602486794132" duration="938000" />
+      <workItem from="1602647307892" duration="62000" />
+      <workItem from="1602740193599" duration="19172000" />
     </task>
     <task id="LOCAL-00001" summary="sd">
       <created>1602455404241</created>
@@ -109,7 +133,21 @@
       <option name="project" value="LOCAL" />
       <updated>1602466063469</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="changed readme location">
+      <created>1602480891965</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1602480891965</updated>
+    </task>
+    <task id="LOCAL-00004" summary="make bert train data">
+      <created>1602755736909</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1602755736909</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -120,7 +158,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="bert_train_data_create" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -130,7 +180,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="sd" />
     <MESSAGE value="commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit" />
+    <MESSAGE value="changed readme location" />
+    <MESSAGE value="make bert train data" />
+    <option name="LAST_COMMIT_MESSAGE" value="make bert train data" />
   </component>
   <component name="WindowStateProjectService">
     <state x="266" y="195" width="1086" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1602473822017">
@@ -145,21 +197,33 @@
       <screen x="0" y="0" width="1620" height="1080" />
     </state>
     <state x="591" y="281" key="FileChooserDialogImpl/0.0.1620.1080@0.0.1620.1080" timestamp="1602479525545" />
+    <state x="545" y="419" key="Github.CreatePullRequestDialog" timestamp="1602755795820">
+      <screen x="0" y="0" width="1620" height="1080" />
+    </state>
+    <state x="545" y="419" key="Github.CreatePullRequestDialog/0.0.1620.1080@0.0.1620.1080" timestamp="1602755795820" />
     <state x="312" y="184" key="SettingsEditor" timestamp="1602455289756">
       <screen x="0" y="0" width="1620" height="1080" />
     </state>
     <state x="312" y="184" key="SettingsEditor/0.0.1620.1080@0.0.1620.1080" timestamp="1602455289756" />
-    <state x="403" y="273" key="Vcs.Push.Dialog.v2" timestamp="1602479448772">
+    <state x="403" y="273" key="Vcs.Push.Dialog.v2" timestamp="1602755898706">
       <screen x="0" y="0" width="1620" height="1080" />
     </state>
-    <state x="403" y="273" key="Vcs.Push.Dialog.v2/0.0.1620.1080@0.0.1620.1080" timestamp="1602479448772" />
-    <state x="391" y="195" key="editAsTableFormatDialogDimension" timestamp="1602468237045">
+    <state x="403" y="273" key="Vcs.Push.Dialog.v2/0.0.1620.1080@0.0.1620.1080" timestamp="1602755898706" />
+    <state x="94" y="100" width="621" height="885" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1602760809570">
       <screen x="0" y="0" width="1620" height="1080" />
     </state>
-    <state x="391" y="195" key="editAsTableFormatDialogDimension/0.0.1620.1080@0.0.1620.1080" timestamp="1602468237045" />
-    <state x="479" y="242" width="672" height="678" key="search.everywhere.popup" timestamp="1602455304104">
+    <state x="94" y="100" width="621" height="885" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1620.1080@0.0.1620.1080" timestamp="1602760809570" />
+    <state x="391" y="195" key="editAsTableFormatDialogDimension" timestamp="1602743850090">
       <screen x="0" y="0" width="1620" height="1080" />
     </state>
-    <state x="479" y="242" width="672" height="678" key="search.everywhere.popup/0.0.1620.1080@0.0.1620.1080" timestamp="1602455304104" />
+    <state x="391" y="195" key="editAsTableFormatDialogDimension/0.0.1620.1080@0.0.1620.1080" timestamp="1602743850090" />
+    <state x="480" y="242" width="672" height="678" key="search.everywhere.popup" timestamp="1602752074383">
+      <screen x="0" y="0" width="1620" height="1080" />
+    </state>
+    <state x="480" y="242" width="672" height="678" key="search.everywhere.popup/0.0.1620.1080@0.0.1620.1080" timestamp="1602752074383" />
+    <state x="632" y="343" key="svn.repositoryBrowser" timestamp="1602755776061">
+      <screen x="0" y="0" width="1620" height="1080" />
+    </state>
+    <state x="632" y="343" key="svn.repositoryBrowser/0.0.1620.1080@0.0.1620.1080" timestamp="1602755776061" />
   </component>
 </project>

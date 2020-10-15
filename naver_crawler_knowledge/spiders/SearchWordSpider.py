@@ -33,13 +33,15 @@ url = "https://m.kin.naver.com/mobile/search/searchList.nhn"
 # can store data by item(variable)
 item = SearchWordItem()
 
+
 class SearchWordSpider(scrapy.Spider):
     # scrapy know this crawler by name(variable) and can executed
     name = "SearchWordSpider"
-
     # get some arguments from users (ex. words, page, delay ...)
+
     def __init__(self, words, page, delay, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.words = words
         # to make args to list i used split(method)
         self.wordList = words.split(',')
         # to use for loop page(str) have to be type(int)

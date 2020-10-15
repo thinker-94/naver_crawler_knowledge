@@ -54,6 +54,9 @@ class CsvPipeline(object):
         print("\n********START********")
         self.file = open(folderName + "/" + fileName + ".csv", 'wb')
         self.exporter = CsvItemExporter(self.file, encoding='utf-8')
+        self.file.write("(".encode('utf-8'))
+        self.file.write(spider.words.encode('utf-8'))
+        self.file.write(" is label name) ".encode('utf-8'))
         self.exporter.start_exporting()
 
     def close_spider(self, spider):
@@ -75,11 +78,11 @@ class CsvPipeline(object):
         wordListCount = len(spider.wordList)
         label = []
         # TODO. fix for loop (because of readability)
-        for i in range(0, wordListCount):
+        for _ in range(0, wordListCount):
             label.append("0")
         label[spider.wordIndex] = "1"
         label = ','.join(label)
-        print(label)
+        item['label'] = label
 
         self.exporter.export_item(item)
         return item
