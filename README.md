@@ -2,8 +2,9 @@
 To make tagging AI i needed big data for making new model
 
 ## How to use
-go project root in terminal (must install scrapy, scrapy-random-useragent-pro, bs4)
-in terminal type (scrapy crawl SearchWordSpider -a words=한국,미국,영국 -a page=1 -a delay=0)
+- go project root in terminal (must install scrapy, scrapy-random-useragent-pro, bs4)
+- in terminal 
+- type (scrapy crawl SearchWordSpider -a words=한국,미국,영국 -a page=1 -a delay=0)
 
 ## Used Open Source
 - Scrapy 2.3 (latest ver. 2020-10-12)
